@@ -19,7 +19,7 @@ export default function LoginPage() {
 
     try {
       // Perform your login logic here
-       const { data } = await axios.post('http://localhost:4000/login', { email, password });
+       const { data } = await axios.post('https://air-al0p.onrender.com/login', { email, password });
        setUser(data);
      //  console.log(data);
      // alert('Login successful');
@@ -52,7 +52,7 @@ export default function LoginPage() {
           />
           <button className="primary">Login</button>
           <div className="text-center py-2 text-gray-500">
-            Don't have an account yet?{' '}
+            Dont have an account yet?{' '}
             <Link className="underline text-black" to={'/register'}>
               Register now
             </Link>
