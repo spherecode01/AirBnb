@@ -21,7 +21,7 @@ const jwtSecret = 'zzzzzzzzpppppoooooddd';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
-app.use(cors({ credentials: true, origin: 'https://friendly-salamander-3e2f2a.netlify.app' }));
+app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app' }));
 
 console.log(process.env.MONGO_URL);
 //mongoose.connect(process.env.MONGO_URL);
