@@ -17,7 +17,7 @@ import BookingPage from "./pages/BookingPage";
 
 
 //axios.default.baseURL= 'http://localhost:4000';
-axios.default.baseURL= 'http://localhost:5173';
+axios.default.baseURL= 'https://air-al0p.onrender.com/register';
 axios.defaults.withCredentials = true;
 
 
