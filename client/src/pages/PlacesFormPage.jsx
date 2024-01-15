@@ -64,13 +64,13 @@ export default function PlacesFormPage() {
     };
     if (id) {
       // update
-      await axios.put('http://localhost:4000/places', {
+      await axios.put('https://air-al0p.onrender.com/places', {
         id, ...placeData
       });
       setRedirect(true);
     } else {
       // new place
-      await axios.post('http://localhost:4000/places', placeData);
+      await axios.post('https://air-al0p.onrender.com/places', placeData);
       setRedirect(true);
     }
 
