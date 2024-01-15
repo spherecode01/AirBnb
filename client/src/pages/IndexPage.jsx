@@ -6,7 +6,7 @@ import Image from "../Image.jsx";
 export default function IndexPage() {
   const [places, setPlaces] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:4000/places').then(response => {
+    axios.get('https://air-al0p.onrender.com/places').then(response => {
       setPlaces(response.data);
     });
   }, []);

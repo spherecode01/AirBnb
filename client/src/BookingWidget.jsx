@@ -25,7 +25,7 @@ export default function BookingWidget({place}) {
   }
 
   async function bookThisPlace() {
-    const response = await axios.post('http://localhost:4000/bookings', {
+    const response = await axios.post('https://air-al0p.onrender.com/bookings', {
       checkIn,checkOut,numberOfGuests,name,phone,
       place:place._id,
       price:numberOfNights * place.price,

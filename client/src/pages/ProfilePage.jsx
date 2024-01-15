@@ -14,7 +14,7 @@ export default function ProfilePage() {
     }
 
     async function logout() {
-        await axios.post('http://localhost:4000/logout');
+        await axios.post('https://air-al0p.onrender.com/logout');
         setRedirect('/');
         setUser(null);
     }
