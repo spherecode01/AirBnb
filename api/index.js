@@ -23,6 +23,8 @@ const jwtSecret = 'zzzzzzzzpppppoooooddd';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
+
+app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app' }));
 app.use(function (req, res, next) {
   //Enabling CORS
   res.header("Access-Control-Allow-Origin", "*");
@@ -30,7 +32,6 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type,Accept, x-client-key, x-client-token, x-client-secret, Authorization");
     next();
   });
-app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app' }));
 
 console.log(process.env.MONGO_URL);
 //mongoose.connect(process.env.MONGO_URL);
