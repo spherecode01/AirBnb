@@ -32,6 +32,7 @@ export default function BookingWidget({place}) {
     });
     const bookingId = response.data._id;
     setRedirect(`/account/bookings/${bookingId}`);
+    
   }
 
   if (redirect) {
