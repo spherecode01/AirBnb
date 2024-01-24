@@ -20,6 +20,24 @@ app.use(cors());
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'zzzzzzzzpppppoooooddd';
 
+function verifyToken(req, res, next) {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+  }
+
+  jwt.verify(token, jwtSecret, {}, (err, userData) => {
+    if (err) {
+      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+    req.userData = userData;
+    next();
+  });
+}
+
+module.exports = verifyToken;
+
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -82,7 +100,7 @@ app.post('/login', async (req, res) => {
     if (passOk) {
       jwt.sign({ email: userDoc.email, id: userDoc._id }, jwtSecret, {}, (err, token) => {
         if (err) throw err;
-        res.json({message: "success", data: userDoc, accessToken: token});
+        res.json({message: "success", data: userDoc, accessToken:token});
       });
     } else {
       res.status(422).json('pass not ok');
@@ -202,7 +220,7 @@ app.get('/places', async (req,res) => {
   res.json( await Place.find() );
 });
 
-app.post('/bookings', async (req, res) => {
+app.post('/bookings',verifyToken, async (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
   const userData = await getUserDataFromReq(req);
   const {
@@ -219,7 +237,7 @@ app.post('/bookings', async (req, res) => {
 });
 
 
-app.get('/bookings', async (req,res) => {
+app.get('/bookings',verifyToken, async (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const userData = await getUserDataFromReq(req);
   res.json( await Booking.find({user:userData.id}).populate('place') );
