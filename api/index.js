@@ -35,7 +35,7 @@ app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.ne
   next();
 });*/
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://illustrious-kashata-687ded.netlify.app');
+ // res.header('Access-Control-Allow-Origin', 'https://illustrious-kashata-687ded.netlify.app');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
   res.header('Access-Control-Allow-Headers', "Access-Control-Allow-Headers: Origin, 'Content-Type',X-Auth-Token'");
   next();
