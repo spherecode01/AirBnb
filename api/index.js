@@ -74,7 +74,7 @@ function getUserDataFromReq(req) {
 app.get('/test', (req, res) => {
   res.json('test OK');
 });
-app.post('/register', async (req, res) => {
+app.post('/register',verifyToken, async (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
   const { name, email, password } = req.body;
   try {
@@ -91,7 +91,7 @@ app.post('/register', async (req, res) => {
 
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login',verifyToken, async (req, res) => {
   mongoose.connect(process.env.MONGO_URL);
   const { email, password } = req.body;
   const userDoc = await User.findOne({ email });
@@ -110,7 +110,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/profile', (req, res) => {
+app.get('/profile',verifyToken, (req, res) => {
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -161,7 +161,7 @@ app.post('/upload', photosMiddleware.array('photos', 100), async (req, res) => {
  //res.json(req.files);
 });
 
-app.post('/places', (req,res) => {
+app.post('/places',verifyToken, (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const {token} = req.cookies;
   const {
@@ -179,7 +179,7 @@ app.post('/places', (req,res) => {
   });
 });
 
-app.get('/user-places', (req,res) => {
+app.get('/user-places',verifyToken, (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const {token} = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -194,7 +194,7 @@ app.get('/places/:id', async (req,res) => {
   res.json(await Place.findById(id));
 });
 
-app.put('/places', async (req,res) => {
+app.put('/places',verifyToken, async (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   const {token} = req.cookies;
   const {
@@ -215,7 +215,7 @@ app.put('/places', async (req,res) => {
   });
 });
 
-app.get('/places', async (req,res) => {
+app.get('/places',verifyToken, async (req,res) => {
   mongoose.connect(process.env.MONGO_URL);
   res.json( await Place.find() );
 });
