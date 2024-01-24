@@ -3,26 +3,19 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../UserContext.jsx";
 
-
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
-   const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
 
-    // Log the values to the console
-  //  console.log('Email:', email);
-   // console.log('Password:', password);
-
     try {
-      // Perform your login logic here
-       const { data } = await axios.post('https://air-al0p.onrender.com/login', { email, password });
-       setUser(data);
-     //  console.log(data);
-     // alert('Login successful');
+      const { data } = await axios.post('https://air-al0p.onrender.com/login', { email, password });
+      localStorage.setItem('token', data.accessToken);
+      setUser(data);
       setRedirect(true);
     } catch (e) {
       alert('Login failed');

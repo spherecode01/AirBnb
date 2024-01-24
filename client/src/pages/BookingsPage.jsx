@@ -1,26 +1,36 @@
 import AccountNav from "../AccountNav";
-import {useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import PlaceImg from "../PlaceImg";
-import {differenceInCalendarDays, format} from "date-fns";
-import {Link} from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import BookingDates from "../BookingDates";
+import { UserContext } from "../UserContext";
 
 export default function BookingsPage() {
-  const [bookings,setBookings] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
-    axios.get('https://air-al0p.onrender.com/bookings').then(response => {
-      setBookings(response.data);
-    });
-  }, []);
+    if (user) {
+      axios.get('https://air-al0p.onrender.com/bookings').then(response => {
+        setBookings(response.data);
+      });
+    }
+  }, [user]);
+
+  if (!user) {
+    // Redirect to login page or perform other actions if user is not authenticated
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div>
       <AccountNav />
       <div>
         {bookings?.length > 0 && bookings.map(booking => (
-          <Link to={`/account/bookings/${booking._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden">
+          <Link key={booking._id} to={`/account/bookings/${booking._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden">
             <div className="w-48">
-              <PlaceImg place={booking.place} /> 
+              <PlaceImg place={booking.place} />
             </div>
             <div className="py-3 pr-3 grow">
               <h2 className="text-xl">{booking.place.title}</h2>
