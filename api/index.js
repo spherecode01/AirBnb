@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app' }));
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.set({
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
   });
 
   next();
-});
+});*/
 
 console.log(process.env.MONGO_URL);
 //mongoose.connect(process.env.MONGO_URL);
