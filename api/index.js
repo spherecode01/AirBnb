@@ -14,7 +14,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+//app.use(cors());
 
 
 const bcryptSalt = bcrypt.genSaltSync(10);
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-//app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app' }));
+app.use(cors({ credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app' }));
 /*app.use((req, res, next) => {
   res.set({
       "Access-Control-Allow-Origin": "*",
@@ -37,7 +37,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://illustrious-kashata-687ded.netlify.app');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', "Access-Control-Allow-Headers: Origin, 'Content-Type',X-Auth-Token'");
   next();
 });
 
