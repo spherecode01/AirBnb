@@ -22,7 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(new URL('uploads/', import.meta.url).pathname));
-app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
+app.use(cors({credentials: true, origin: 'https://illustrious-kashata-687ded.netlify.app'}));
 
 app.post('/upload', photoMiddleware.array('photos', 100), handleUpload);
 
