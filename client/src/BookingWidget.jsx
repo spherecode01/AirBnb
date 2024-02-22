@@ -34,7 +34,7 @@ export default function BookingWidget({ place }) {
         return;
       }
 
-      const response = await axios.post('https://air-al0p.onrender.com/bookings', {
+      const response = await axios.post('http://localhost:4000/booking/bookings', {
         checkIn, checkOut, numberOfGuests, name, phone,
         place: place._id,
         price: numberOfNights * place.price,

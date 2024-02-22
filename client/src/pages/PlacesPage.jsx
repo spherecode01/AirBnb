@@ -12,7 +12,7 @@ export default function PlacesPage() {
 
   useEffect(() => {
     if (user) {
-      axios.get('https://air-al0p.onrender.com/user-places').then(({ data }) => {
+      axios.get('http://localhost:4000/places/user-places').then(({ data }) => {
         setPlaces(data);
       });
     }

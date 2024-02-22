@@ -12,14 +12,16 @@ export default function BookingsPage() {
 
   useEffect(() => {
     if (user) {
-      axios.get('https://air-al0p.onrender.com/bookings').then(response => {
+      axios.get('http://localhost:4000/booking/bookings', {
+        headers: { Authorization: `Bearer ${user.accessToken}` },
+      }).then(response => {
         setBookings(response.data);
       });
     }
   }, [user]);
 
   if (!user) {
-    // Redirect to login page or perform other actions if user is not authenticated
+    // Redirect to login page or perform other actions if the user is not authenticated
     return <Navigate to="/login" />;
   }
 

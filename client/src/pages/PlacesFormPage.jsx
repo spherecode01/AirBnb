@@ -22,7 +22,7 @@ export default function PlacesFormPage() {
     if (!id) {
       return;
     }
-    axios.get('https://air-al0p.onrender.com/places/'+id).then(response => {
+    axios.get('http://localhost:4000/places/places/'+id).then(response => {
        const {data} = response;
        setTitle(data.title);
        setAddress(data.address);
@@ -64,13 +64,13 @@ export default function PlacesFormPage() {
     };
     if (id) {
       // update
-      await axios.put('https://air-al0p.onrender.com/places', {
+      await axios.put('http://localhost:4000/places/places', {
         id, ...placeData
       });
       setRedirect(true);
     } else {
       // new place
-      await axios.post('https://air-al0p.onrender.com/places', placeData);
+      await axios.post('http://localhost:4000/places/places', placeData);
       setRedirect(true);
     }
 

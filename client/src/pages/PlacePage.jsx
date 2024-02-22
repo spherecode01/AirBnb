@@ -12,7 +12,7 @@ export default function PlacePage() {
     if (!id) {
       return;
     }
-    axios.get(`https://air-al0p.onrender.com/places/${id}`).then(response => {
+    axios.get(`http://localhost:4000/places/places/${id}`).then(response => {
       setPlace(response.data);
     });
   }, [id]);

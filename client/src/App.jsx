@@ -17,9 +17,9 @@ import BookingPage from "./pages/BookingPage";
 
 
 //axios.default.baseURL= 'http://localhost:4000';
-axios.default.baseURL= 'https://illustrious-kashata-687ded.netlify.app';
+//axios.default.baseURL= 'https://illustrious-kashata-687ded.netlify.app';
+axios.defaults.baseURL = 'http://localhost:5173';
 axios.defaults.withCredentials = true;
-
 
 
  function App() {

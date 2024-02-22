@@ -1,3 +1,4 @@
+// UserContext.jsx
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -5,34 +6,54 @@ export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const { data } = await axios.get('https://air-al0p.onrender.com/profile');
+        const { data } = await axios.get("http://localhost:4000/user/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setUser(data);
-        setReady(true);
       } catch (error) {
-        // Handle error, e.g., user is not authenticated
-        console.error('Error fetching user profile:', error);
-        setUser(null);
-        setReady(true);
+        console.error("Error fetching user profile:", error);
+
+        if (error.response && error.response.status === 401) {
+          setUser(null);
+          localStorage.removeItem("token");
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (!user) {
+    if (localStorage.getItem("token")) {
       fetchUserProfile();
+    } else {
+      setLoading(false);
     }
-  }, [user]);
+  }, []);
 
-  const logout = () => {
-    // Perform logout actions, e.g., clear user info, redirect, etc.
-    setUser(null);
+  const login = (userData) => {
+    localStorage.setItem("token", userData.accessToken);
+    setUser(userData);
+  };
+
+  const logout = async () => {
+    try {
+      await axios.post("http://localhost:4000/user/logout");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem("token");
+    }
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, ready, logout }}>
+    <UserContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </UserContext.Provider>
   );

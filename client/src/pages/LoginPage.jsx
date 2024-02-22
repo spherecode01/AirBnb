@@ -4,26 +4,37 @@ import axios from "axios";
 import { UserContext } from "../UserContext.jsx";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const { setUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const { login } = useContext(UserContext);
 
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
 
     try {
-      const { data } = await axios.post('https://air-al0p.onrender.com/login', { email, password });
-      localStorage.setItem('token', data.accessToken);
-      setUser(data);
+      setLoading(true);
+      const { data } = await axios.post("https://air-al0p.onrender.com/auth/login", {
+        email,
+        password,
+      });
+
+      // Use the login function to set user data in context
+      login(data);
+
+      // Set the redirect flag to true
       setRedirect(true);
-    } catch (e) {
-      alert('Login failed');
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed. Please check your credentials and try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
   if (redirect) {
-    return <Navigate to={'/'} />;
+    return <Navigate to={"/"} />;
   }
 
   return (
@@ -43,7 +54,7 @@ export default function LoginPage() {
             value={password}
             onChange={(ev) => setPassword(ev.target.value)}
           />
-          <button className="primary">Login</button>
+          <button className="primary" disabled={loading}>Login</button>
           <div className="text-center py-2 text-gray-500">
             Dont have an account yet?{' '}
             <Link className="underline text-black" to={'/register'}>
