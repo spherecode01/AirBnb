@@ -9,7 +9,7 @@ export default function RegisterPage() {
   async function registerUser(ev) {
     ev.preventDefault();
     try {
-      await axios.post('http://localhost:4000/auth/register', {
+      await axios.post('https://air-al0p.onrender.com/auth/register', {
         name,
         email,
         password,
